@@ -6,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../core/fixtures/fixture_reader.dart';
 
-
 void main() {
   final tNumberTriviaModel = NumberTriviaModel(number: 1, text: 'Test text');
 
@@ -34,15 +33,28 @@ void main() {
 
     test(
       'should return a valid model when the JSON number is an double',
-          () async {
+      () async {
         //arrange
         final Map<String, dynamic> jsonMap =
-        json.decode(fixture('trivia_double.json'));
+            json.decode(fixture('trivia_double.json'));
         //act
         final result = NumberTriviaModel.fromJson(jsonMap);
         //assert
         expect(result, tNumberTriviaModel);
       },
     );
+  });
+
+  group('toJson', () {
+    test('should return a Json map containing the proper data', () async {
+      //act
+      final result = tNumberTriviaModel.toJson();
+      //assert
+      final expectedMap = {
+        "text": "Test text",
+        "number": 1,
+      };
+      expect(result, expectedMap);
+    });
   });
 }
